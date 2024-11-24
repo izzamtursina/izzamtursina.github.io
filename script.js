@@ -171,32 +171,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-
-document.addEventListener("DOMContentLoaded", () => {
-  // Initialize EmailJS
-  emailjs.init({
-    publicKey: "XLy7l0PtqY5KesP7z",
-  });
-
-  // Form submission event listener
-  document
-    .getElementById("contact-form")
-    .addEventListener("submit", function (event) {
-      event.preventDefault(); // Prevent the default form submission
-
-      const serviceID = "service_eik2ebt"; // Replace with your EmailJS Service ID
-      const templateID = "template_ev7ysrs"; // Replace with your EmailJS Template ID
-
-      // Send email using EmailJS
-      emailjs.sendForm(serviceID, templateID, this).then(
-        () => {
-          alert("Message sent successfully!");
-          this.reset(); // Reset form fields after successful submission
-        },
-        (error) => {
-          console.error("Error sending message:", error);
-          alert("Failed to send message. Please try again.");
-        }
-      );
-    });
-});
