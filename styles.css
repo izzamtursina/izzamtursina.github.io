@@ -966,7 +966,23 @@ nav ul li a:hover {
   padding: 10px;
 }
 
+/* Default style for desktop: underlined */
 .highlighted-email {
   text-decoration: underline;
   color: #64ffda;
+  font-weight: normal; /* Ensure it's not bold by default */
+  transition: color 0.3s ease;
+}
+
+/* Hover effect for desktop */
+.highlighted-email:hover {
+  color: #52d9b9; /* Slightly darker color on hover */
+}
+
+/* Mobile view: bold without underline */
+@media (max-width: 768px) {
+  .highlighted-email {
+    text-decoration: none; /* Remove underline */
+    font-weight: bold; /* Make it bold */
+  }
 }
