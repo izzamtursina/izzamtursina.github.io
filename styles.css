@@ -25,6 +25,13 @@ body {
   transition: background 0.3s ease; /* Smooth transition for a polished effect */
 }
 
+/* Disable flashlight effect on mobile */
+@media (max-width: 768px) {
+  #flashlight {
+    display: none;
+  }
+}
+
 #nav-list a.active {
   color: #64ffda; /* Highlighted color */
   font-weight: bold;
@@ -347,7 +354,6 @@ nav ul li a:hover {
   position: relative; /* Ensure overlay stays within the section */
   height: 100vh; /* Makes the hero section fill the entire screen height */
   width: 100%; /* Ensures it spans the full width */
-  background-image: url("./assets/images/background-hero.svg"); /* Replace with your background image */
   background-size: cover; /* Ensures the image covers the whole section */
   background-position: center;
   background-repeat: no-repeat;
@@ -903,7 +909,7 @@ nav ul li a:hover {
   background-color: #0a192f; /* Dark background similar to the image */
   color: #ccd6f6; /* Soft white color for text */
   text-align: center;
-  padding: 150px 20px; /* Add padding for spacing */
+  padding: 250px 20px; /* Add padding for spacing */
 }
 
 .contact-section h2 {
@@ -958,4 +964,9 @@ nav ul li a:hover {
   width: 100%; /* Full width */
   z-index: 1000; /* Ensure it stays on top of other content */
   padding: 10px;
+}
+
+.highlighted-email {
+  text-decoration: underline;
+  color: #64ffda;
 }
