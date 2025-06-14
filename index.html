@@ -59,7 +59,8 @@
           <h1>Afgha Izzam Tursina</h1>
           <h2>Petroleum Engineer | Coding Enthusiast</h2>
           <p>
-            A recent graduate with a degree in Petroleum Engineering, equipped with a strong academic foundation and practical experience in industry projects, research, and organization.
+            Petroleum engineering graduate currently employed as a Junior Research Analyst in Carbon Capture, Utilization, and Storage (CCUS), with practical experience in applying data science, reservoir engineering, and CO₂ sequestration studies.
+          </p>
         </div>
         <div class="hero-right">
           <img
@@ -98,9 +99,23 @@
 
             <!-- Right Column -->
             <div class="experiences-right">
+              <div class="experience-row" id="experience-00">
+                <div class="experience-year">
+                  <h4>May 2025 – Present</h4>
+                </div>
+                <div class="experience-details">
+                  <h3>
+                    Rystad Energy - Jr. CCUS Research Analyst
+                  </h3>
+                  <div class="tech-stack">
+                    <span>Excel</span>
+                    <span>Power BI</span>
+                  </div>
+                </div>
+              </div>
               <div class="experience-row" id="experience-01">
                 <div class="experience-year">
-                  <h4>Oct 2024 – Present</h4>
+                  <h4>Oct 2024 – May 2025</h4>
                 </div>
                 <div class="experience-details">
                   <h3>
@@ -221,185 +236,190 @@
         <!-- Project Section -->
         <section id="project" class="project-section">
           <h2 class="section-title">Some Things I've Built</h2>
-          <div class="projects-container">
-            <!-- Single Project -->
-            <div class="project-item" id="project-01">
-              <div class="project-image">
-                <img
-                  src="assets/images/projects/1_well placements.png"
-                  alt="Halcyon Theme"
-                />
-              </div>
-              <div class="project-content">
-                <p class="featured-project">Personal Project</p>
-                <h3 class="project-title">
-                  Optimizing Development Well Targets
-                </h3>
-                <p class="project-description">
-                  Designed a strategy to pinpoint optimal sweat points for
-                  development wells by processing KH-GIIP maps exported from
-                  Petrel using Python. Constraints included a maximum distance
-                  of 3 km from the platform, minimum 500 m between targets, KH
-                  above 10 D.ft, and ranking targets based on GIIP values.
-                </p>
+          <div class="carousel-container">
+            <div class="projects-container" id="projects-carousel">
+              <!-- Single Project -->
+              <div class="project-item" id="project-01">
+                <div class="project-image">
+                  <img
+                    src="assets/images/projects/1_well placements.png"
+                    alt="Halcyon Theme"
+                  />
+                </div>
+                <div class="project-content">
+                  <p class="featured-project">Personal Project</p>
+                  <h3 class="project-title">
+                    Optimizing Development Well Targets
+                  </h3>
+                  <p class="project-description">
+                    Designed a strategy to pinpoint optimal sweat points for
+                    development wells by processing KH-GIIP maps exported from
+                    Petrel using Python. Constraints included a maximum distance
+                    of 3 km from the platform, minimum 500 m between targets, KH
+                    above 10 D.ft, and ranking targets based on GIIP values.
+                  </p>
 
-                <ul class="project-tech-list">
-                  <li>Petrel</li>
-                  <li>Python</li>
-                </ul>
+                  <ul class="project-tech-list">
+                    <li>Petrel</li>
+                    <li>Python</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="project-item" id="project-02">
+                <div class="project-image">
+                  <img
+                    src="assets\images\projects\2_material balance pressure.png"
+                    alt="Halcyon Theme"
+                  />
+                </div>
+                <div class="project-content">
+                  <p class="featured-project">Personal Project</p>
+                  <h3 class="project-title">
+                    Time-Dependent Pressure Prediction
+                  </h3>
+                  <p class="project-description">
+                    Built a machine learning model to predict formation pressure
+                    over time for layers without existing data. Pressure and
+                    production data were split by formation layers, using field
+                    pressure and production inputs for training. This approach
+                    improved accuracy in reservoir pressure prediction.
+                  </p>
+
+                  <ul class="project-tech-list">
+                    <li>OFM</li>
+                    <li>MBAL</li>
+                    <li>Python</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="project-item" id="project-03">
+                <div class="project-image">
+                  <img
+                    src="assets/images/projects/3_well correlation.png"
+                    alt="Halcyon Theme"
+                  />
+                </div>
+                <div class="project-content">
+                  <p class="featured-project">Personal Project</p>
+                  <h3 class="project-title">
+                    Well Correlation with Dynamic Time Warping
+                  </h3>
+                  <p class="project-description">
+                    Developed a predictive model to analyze well correlations
+                    using gamma ray data. Implemented the Dynamic Time Warping
+                    algorithm to assess and compare patterns across multiple wells
+                    for geological insight.
+                  </p>
+
+                  <ul class="project-tech-list">
+                    <li>Python</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="project-item" id="project-04">
+                <div class="project-image">
+                  <img
+                    src="assets\images\projects\4_distance optimization.png"
+                    alt="Halcyon Theme"
+                  />
+                </div>
+                <div class="project-content">
+                  <p class="featured-project">Personal Project</p>
+                  <h3 class="project-title">
+                    Optimal Pipeline Routing with Dijkstra's Algorithm
+                  </h3>
+                  <p class="project-description">
+                    Calculated the optimal distance between points considering
+                    pipeline distance and pressure drop constraints. Using
+                    Dijkstra’s algorithm, the project provided cost-efficient and
+                    technically viable routing solutions.
+                  </p>
+
+                  <ul class="project-tech-list">
+                    <li>Python</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="project-item" id="project-05">
+                <div class="project-image">
+                  <img
+                    src="assets/images/projects/5_well log analysis.png"
+                    alt="Halcyon Theme"
+                  />
+                </div>
+                <div class="project-content">
+                  <p class="featured-project">Personal Project</p>
+                  <h3 class="project-title">
+                    Well Log Data Processing using Python
+                  </h3>
+                  <p class="project-description">
+                    Automated well log data processing using Python to enhance
+                    computational flexibility and enable dynamic, user-defined
+                    calculations for well log analysis.
+                  </p>
+
+                  <ul class="project-tech-list">
+                    <li>Python</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="project-item" id="project-06">
+                <div class="project-image">
+                  <img
+                    src="assets\images\projects\6_rock type prediction.png"
+                    alt="Halcyon Theme"
+                  />
+                </div>
+                <div class="project-content">
+                  <p class="featured-project">Personal Project</p>
+                  <h3 class="project-title">
+                    Predicting Rock Types from Well Log Data Using Machine
+                    Learning
+                  </h3>
+                  <p class="project-description">
+                    Developed a machine learning model to predict rock types
+                    across all depths of a well without rock type data. The model
+                    was trained using data from other wells within the same field,
+                    ensuring consistency and reliability in predictions.
+                  </p>
+
+                  <ul class="project-tech-list">
+                    <li>Python</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="project-item" id="project-07">
+                <div class="project-image">
+                  <img
+                    src="assets\images\projects\7_business intelligence.png"
+                    alt="Halcyon Theme"
+                  />
+                </div>
+                <div class="project-content">
+                  <p class="featured-project">Personal Project</p>
+                  <h3 class="project-title">
+                    Business Intelligence Dashboard for a Fictional Manufacturing
+                    Company
+                  </h3>
+                  <p class="project-description">
+                    Designed and developed a dynamic business intelligence
+                    solution for AdventureWorks Cycles, a fictional manufacturing
+                    company.Transformed raw data into insights using Power Query,
+                    relational data modeling, and DAX calculations. Delivered
+                    reports to track KPIs, analyze product trends, and identify
+                    high-value customers, simulating real-world business
+                    intelligence tasks
+                  </p>
+
+                  <ul class="project-tech-list">
+                    <li>Power BI</li>
+                  </ul>
+                </div>
               </div>
             </div>
-            <div class="project-item" id="project-02">
-              <div class="project-image">
-                <img
-                  src="assets\images\projects\2_material balance pressure.png"
-                  alt="Halcyon Theme"
-                />
-              </div>
-              <div class="project-content">
-                <p class="featured-project">Personal Project</p>
-                <h3 class="project-title">
-                  Time-Dependent Pressure Prediction
-                </h3>
-                <p class="project-description">
-                  Built a machine learning model to predict formation pressure
-                  over time for layers without existing data. Pressure and
-                  production data were split by formation layers, using field
-                  pressure and production inputs for training. This approach
-                  improved accuracy in reservoir pressure prediction.
-                </p>
-
-                <ul class="project-tech-list">
-                  <li>OFM</li>
-                  <li>MBAL</li>
-                  <li>Python</li>
-                </ul>
-              </div>
-            </div>
-            <div class="project-item" id="project-03">
-              <div class="project-image">
-                <img
-                  src="assets/images/projects/3_well correlation.png"
-                  alt="Halcyon Theme"
-                />
-              </div>
-              <div class="project-content">
-                <p class="featured-project">Personal Project</p>
-                <h3 class="project-title">
-                  Well Correlation with Dynamic Time Warping
-                </h3>
-                <p class="project-description">
-                  Developed a predictive model to analyze well correlations
-                  using gamma ray data. Implemented the Dynamic Time Warping
-                  algorithm to assess and compare patterns across multiple wells
-                  for geological insight.
-                </p>
-
-                <ul class="project-tech-list">
-                  <li>Python</li>
-                </ul>
-              </div>
-            </div>
-            <div class="project-item" id="project-04">
-              <div class="project-image">
-                <img
-                  src="assets\images\projects\4_distance optimization.png"
-                  alt="Halcyon Theme"
-                />
-              </div>
-              <div class="project-content">
-                <p class="featured-project">Personal Project</p>
-                <h3 class="project-title">
-                  Optimal Pipeline Routing with Dijkstra's Algorithm
-                </h3>
-                <p class="project-description">
-                  Calculated the optimal distance between points considering
-                  pipeline distance and pressure drop constraints. Using
-                  Dijkstra’s algorithm, the project provided cost-efficient and
-                  technically viable routing solutions.
-                </p>
-
-                <ul class="project-tech-list">
-                  <li>Python</li>
-                </ul>
-              </div>
-            </div>
-            <div class="project-item" id="project-05">
-              <div class="project-image">
-                <img
-                  src="assets/images/projects/5_well log analysis.png"
-                  alt="Halcyon Theme"
-                />
-              </div>
-              <div class="project-content">
-                <p class="featured-project">Personal Project</p>
-                <h3 class="project-title">
-                  Well Log Data Processing using Python
-                </h3>
-                <p class="project-description">
-                  Automated well log data processing using Python to enhance
-                  computational flexibility and enable dynamic, user-defined
-                  calculations for well log analysis.
-                </p>
-
-                <ul class="project-tech-list">
-                  <li>Python</li>
-                </ul>
-              </div>
-            </div>
-            <div class="project-item" id="project-06">
-              <div class="project-image">
-                <img
-                  src="assets\images\projects\6_rock type prediction.png"
-                  alt="Halcyon Theme"
-                />
-              </div>
-              <div class="project-content">
-                <p class="featured-project">Personal Project</p>
-                <h3 class="project-title">
-                  Predicting Rock Types from Well Log Data Using Machine
-                  Learning
-                </h3>
-                <p class="project-description">
-                  Developed a machine learning model to predict rock types
-                  across all depths of a well without rock type data. The model
-                  was trained using data from other wells within the same field,
-                  ensuring consistency and reliability in predictions.
-                </p>
-
-                <ul class="project-tech-list">
-                  <li>Python</li>
-                </ul>
-              </div>
-            </div>
-            <div class="project-item" id="project-07">
-              <div class="project-image">
-                <img
-                  src="assets\images\projects\7_business intelligence.png"
-                  alt="Halcyon Theme"
-                />
-              </div>
-              <div class="project-content">
-                <p class="featured-project">Personal Project</p>
-                <h3 class="project-title">
-                  Business Intelligence Dashboard for a Fictional Manufacturing
-                  Company
-                </h3>
-                <p class="project-description">
-                  Designed and developed a dynamic business intelligence
-                  solution for AdventureWorks Cycles, a fictional manufacturing
-                  company.Transformed raw data into insights using Power Query,
-                  relational data modeling, and DAX calculations. Delivered
-                  reports to track KPIs, analyze product trends, and identify
-                  high-value customers, simulating real-world business
-                  intelligence tasks
-                </p>
-
-                <ul class="project-tech-list">
-                  <li>Power BI</li>
-                </ul>
-              </div>
-            </div>
+            <button class="carousel-button prev" id="prev-project">&#10094;</button>
+            <button class="carousel-button next" id="next-project">&#10095;</button>
+            <div class="carousel-pagination" id="project-pagination"></div>
           </div>
           <div class="project-updates highlight">
             <p>
@@ -417,12 +437,13 @@
     <section id="contact" class="contact-section">
       <h2 class="contact-title">Get In Touch</h2>
       <h3 class="contact-description">
-        I am actively exploring new opportunities and would love to hear from
-        you! Whether you have a question, a potential opportunity, or just want
-        to say hello, feel free to reach out. You can email me at
+        I'm not actively looking for new opportunities right now, but I'd still love to hear from you!
+        Whether you have a question, something interesting to share, or just want to connect, feel free to reach out
+        You can email me at
         <a href="mailto:afghaizzam21@gmail.com" class="highlighted-email"
           >afghaizzam21@gmail.com</a
-        >, and I’ll do my best to respond promptly!
+        > or connect with me on LinkedIn. I'll do my best to respond promptly!</a
+        >
       </h3>
     </section>
 
