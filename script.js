@@ -153,6 +153,111 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Reapply background images on window resize
   window.addEventListener("resize", applyBackgroundImages);
+
+  // Carousel Logic for infinite loop with cloning
+  const originalProjects = Array.from(document.querySelectorAll(".projects-container .project-item"));
+  const projectsContainer = document.getElementById("projects-carousel");
+  const prevButton = document.getElementById("prev-project");
+  const nextButton = document.getElementById("next-project");
+  const paginationContainer = document.getElementById("project-pagination");
+
+  const totalOriginalProjects = originalProjects.length;
+  let currentIndex = 1; // Start at the first real project (index 1 after prepending clone)
+
+  // Clone the last project and prepend it
+  const lastProjectClone = originalProjects[totalOriginalProjects - 1].cloneNode(true);
+  projectsContainer.prepend(lastProjectClone);
+
+  // Clone the first project and append it
+  const firstProjectClone = originalProjects[0].cloneNode(true);
+  projectsContainer.append(firstProjectClone);
+
+  // Function to show a specific project by index (including clones)
+  const showProject = (index, smoothTransition = true) => {
+    if (!smoothTransition) {
+      projectsContainer.classList.add('no-transition');
+    } else {
+      projectsContainer.classList.remove('no-transition');
+    }
+
+    const offset = -index * 100;
+    projectsContainer.style.transform = `translateX(${offset}%)`;
+
+    // Update pagination only for real projects
+    updatePagination(index);
+  };
+
+  // Function to create pagination dots (using original project count)
+  const createPaginationDots = () => {
+    paginationContainer.innerHTML = '';
+    for (let i = 0; i < totalOriginalProjects; i++) {
+      const dot = document.createElement("span");
+      dot.classList.add("pagination-dot");
+      // Use a data attribute to store the index of the real project
+      dot.dataset.projectIndex = i + 1; // Corresponds to actualIndex of the real projects
+      dot.addEventListener("click", (event) => {
+        const targetIndex = parseInt(event.target.dataset.projectIndex);
+        currentIndex = targetIndex; // Update current index to match clicked dot's real project
+        showProject(currentIndex);
+      });
+      paginationContainer.appendChild(dot);
+    }
+  };
+
+  // Function to update pagination dots' active state
+  const updatePagination = (actualCarouselIndex) => {
+    const dots = document.querySelectorAll(".pagination-dot");
+    dots.forEach((dot, i) => {
+      // Map the carousel's actual index (0=last clone, 1=real first, ..., N=real last, N+1=first clone)
+      // to the pagination dot index (0 to N-1)
+      let realProjectIndex = actualCarouselIndex - 1;
+      if (realProjectIndex === -1) { // If it's the last clone (index 0)
+          realProjectIndex = totalOriginalProjects - 1;
+      } else if (realProjectIndex === totalOriginalProjects) { // If it's the first clone (index totalOriginalProjects + 1)
+          realProjectIndex = 0;
+      }
+      dot.classList.toggle("active", i === realProjectIndex);
+    });
+  };
+
+  // Event listener for transition end to handle seamless loop
+  projectsContainer.addEventListener('transitionend', () => {
+    // If we are on the first cloned slide (index totalOriginalProjects + 1)
+    if (currentIndex === totalOriginalProjects + 1) {
+      projectsContainer.classList.add('no-transition'); // Disable transition
+      currentIndex = 1; // Jump to the real first slide's position
+      projectsContainer.style.transform = `translateX(${-currentIndex * 100}%)`;
+      // Force reflow
+      projectsContainer.offsetHeight; 
+      projectsContainer.classList.remove('no-transition'); // Re-enable transition
+    }
+    // If we are on the last cloned slide (index 0)
+    else if (currentIndex === 0) {
+      projectsContainer.classList.add('no-transition'); // Disable transition
+      currentIndex = totalOriginalProjects; // Jump to the real last slide's position
+      projectsContainer.style.transform = `translateX(${-currentIndex * 100}%)`;
+      // Force reflow
+      projectsContainer.offsetHeight;
+      projectsContainer.classList.remove('no-transition'); // Re-enable transition
+    }
+  });
+
+
+  // Event listeners for carousel buttons
+  prevButton.addEventListener("click", () => {
+    currentIndex--;
+    showProject(currentIndex);
+  });
+
+  nextButton.addEventListener("click", () => {
+    currentIndex++;
+    showProject(currentIndex);
+  });
+
+  // Initialize carousel: position at the first real project (index 1) instantly
+  showProject(currentIndex, false); // false for no smooth transition initially
+  createPaginationDots();
+  updatePagination(currentIndex); // Initial pagination state
 });
 
 document.addEventListener("DOMContentLoaded", () => {
