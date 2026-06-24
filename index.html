@@ -1,456 +1,2013 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio | Afgha Izzam Tursina</title>
     <link
       rel="icon"
       href="./assets/images/icon/logo-it-white-bgblue.svg"
-      type="image/x-icon"
+      type="image/svg+xml"
     />
-    <title>Portfolio | Afgha Izzam Tursina</title>
-    <link rel="stylesheet" href="styles.css" />
-    <!-- Include Boxicons CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ============================================================
+       DESIGN TOKENS — edit here to retheme the whole site
+    ============================================================ */
+      :root {
+        --bg-primary: #0a192f;
+        --bg-secondary: #112240;
+        --bg-card: #112240;
+        --bg-hover: #1d3461;
+        --text-primary: #ccd6f6;
+        --text-muted: #8892b0;
+        --accent: #64ffda;
+        --accent-dim: rgba(100, 255, 218, 0.12);
+        --border: rgba(100, 255, 218, 0.18);
+        --shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+        --radius: 8px;
+        --nav-height: 64px;
+        --transition: 0.25s ease;
+        --font-body: "Inter", sans-serif;
+        --font-mono: "JetBrains Mono", monospace;
+      }
+
+      [data-theme="light"] {
+        --bg-primary: #f0f4f8;
+        --bg-secondary: #dde6f0;
+        --bg-card: #ffffff;
+        --bg-hover: #e2ecf5;
+        --text-primary: #1a2e44;
+        --text-muted: #4a6080;
+        --accent: #0077b6;
+        --accent-dim: rgba(0, 119, 182, 0.1);
+        --border: rgba(0, 119, 182, 0.2);
+        --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      /* ============================================================
+       RESET & BASE
+    ============================================================ */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        font-family: var(--font-body);
+        line-height: 1.6;
+        transition:
+          background var(--transition),
+          color var(--transition);
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      ul {
+        list-style: none;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      /* ============================================================
+       FLASHLIGHT (dark mode only)
+    ============================================================ */
+      #flashlight {
+        position: fixed;
+        width: 700px;
+        height: 700px;
+        border-radius: 50%;
+        pointer-events: none;
+        background: radial-gradient(
+          circle,
+          rgba(100, 255, 218, 0.06) 0%,
+          transparent 60%
+        );
+        transform: translate(-50%, -50%);
+        z-index: 0;
+        top: -500px;
+        left: -500px;
+        transition: opacity 0.3s ease;
+      }
+
+      [data-theme="light"] #flashlight {
+        display: none;
+      }
+      @media (max-width: 768px) {
+        #flashlight {
+          display: none;
+        }
+      }
+
+      /* ============================================================
+       SOCIAL SIDEBAR
+    ============================================================ */
+      .social-sidebar {
+        position: fixed;
+        left: 20px;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        z-index: 100;
+      }
+
+      .social-sidebar::after {
+        content: "";
+        width: 1px;
+        height: 80px;
+        background: var(--text-muted);
+        opacity: 0.4;
+        margin-top: 4px;
+      }
+
+      .social-sidebar a {
+        color: var(--text-muted);
+        font-size: 22px;
+        transition:
+          color var(--transition),
+          transform var(--transition);
+      }
+
+      .social-sidebar a:hover {
+        color: var(--accent);
+        transform: translateY(-3px);
+      }
+
+      @media (max-width: 900px) {
+        .social-sidebar {
+          display: none;
+        }
+      }
+
+      /* ============================================================
+       HEADER / NAV
+    ============================================================ */
+      header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: var(--nav-height);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        padding: 0 32px;
+        transition:
+          background var(--transition),
+          box-shadow var(--transition);
+      }
+
+      header.scrolled {
+        background: var(--bg-secondary);
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .nav-logo img {
+        width: 40px;
+        height: auto;
+      }
+      .nav-logo img:hover {
+        transform: scale(1.1);
+        transition: transform var(--transition);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .nav-links a {
+        color: var(--text-primary);
+        font-size: 0.88rem;
+        padding: 6px 14px;
+        border-radius: var(--radius);
+        transition:
+          color var(--transition),
+          background var(--transition);
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--accent);
+      }
+
+      .nav-links a.active {
+        border-bottom: 2px solid var(--accent);
+      }
+
+      .btn-nav-cv {
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+        color: var(--accent) !important;
+        border: 1px solid var(--accent);
+        border-radius: var(--radius);
+        padding: 8px 16px !important;
+        margin-left: 8px;
+        transition: background var(--transition) !important;
+      }
+
+      .btn-nav-cv:hover {
+        background: var(--accent-dim) !important;
+        color: var(--accent) !important;
+      }
+
+      .theme-toggle {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        font-size: 20px;
+        cursor: pointer;
+        padding: 6px;
+        display: flex;
+        align-items: center;
+        transition: color var(--transition);
+      }
+
+      .theme-toggle:hover {
+        color: var(--accent);
+      }
+
+      .lang-toggle {
+        background: none;
+        border: 1px solid var(--border);
+        color: var(--text-muted);
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        cursor: pointer;
+        padding: 4px 10px;
+        border-radius: var(--radius);
+        transition:
+          color var(--transition),
+          border-color var(--transition);
+      }
+
+      .lang-toggle:hover {
+        color: var(--accent);
+        border-color: var(--accent);
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 24px;
+        height: 18px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
+      }
+
+      .hamburger span {
+        display: block;
+        height: 2px;
+        background: var(--text-primary);
+        border-radius: 2px;
+        transition: all 0.3s ease;
+      }
+
+      .hamburger.open span:nth-child(1) {
+        transform: rotate(45deg) translateY(8px);
+      }
+      .hamburger.open span:nth-child(2) {
+        opacity: 0;
+      }
+      .hamburger.open span:nth-child(3) {
+        transform: rotate(-45deg) translateY(-8px);
+      }
+
+      @media (max-width: 768px) {
+        .hamburger {
+          display: flex;
+        }
+
+        .nav-links {
+          position: fixed;
+          inset: 0;
+          background: var(--bg-secondary);
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 32px;
+          transform: translateX(100%);
+          transition: transform 0.4s ease;
+          z-index: 999;
+        }
+
+        .nav-links.open {
+          transform: translateX(0);
+        }
+        .nav-links a {
+          font-size: 1.4rem;
+        }
+        .btn-nav-cv {
+          font-size: 1rem !important;
+          padding: 10px 24px !important;
+        }
+
+        header {
+          padding: 0 20px;
+        }
+      }
+
+      /* ============================================================
+       HERO
+    ============================================================ */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: flex-start;
+        padding: calc(var(--nav-height) + 100px) 32px 80px;
+        position: relative;
+      }
+
+      .hero-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+        width: 100%;
+      }
+
+      .hero-greeting {
+        font-family: var(--font-mono);
+        font-size: 0.9rem;
+        color: var(--accent);
+        margin-bottom: 16px;
+      }
+
+      .hero-name {
+        font-size: clamp(2.2rem, 5vw, 3.5rem);
+        font-weight: 700;
+        color: var(--text-primary);
+        line-height: 1.15;
+        margin-bottom: 12px;
+      }
+
+      .hero-role {
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        color: var(--accent);
+        font-weight: 600;
+        margin-bottom: 6px;
+        line-height: 1.4;
+      }
+
+      .hero-role .at-company {
+        font-weight: 400;
+        opacity: 0.75;
+      }
+
+      .hero-subtitle {
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        letter-spacing: 0.05em;
+        margin-bottom: 24px;
+      }
+
+      /* Scroll indicator */
+      .scroll-indicator {
+        position: absolute;
+        bottom: 36px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        opacity: 0.5;
+        transition: opacity var(--transition);
+        cursor: default;
+      }
+
+      .scroll-indicator:hover {
+        opacity: 0.9;
+      }
+
+      .scroll-indicator span {
+        font-family: var(--font-mono);
+        font-size: 0.65rem;
+        color: var(--text-muted);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .scroll-chevron {
+        width: 20px;
+        height: 20px;
+        border-right: 2px solid var(--accent);
+        border-bottom: 2px solid var(--accent);
+        transform: rotate(45deg);
+        animation: bounce-down 1.6s ease-in-out infinite;
+      }
+
+      @keyframes bounce-down {
+        0%,
+        100% {
+          transform: rotate(45deg) translateY(0);
+          opacity: 0.6;
+        }
+        50% {
+          transform: rotate(45deg) translateY(5px);
+          opacity: 1;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .scroll-indicator {
+          display: none;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .scroll-chevron {
+          animation: none;
+        }
+      }
+
+      .hero-bio {
+        font-size: 1rem;
+        color: var(--text-muted);
+        max-width: 480px;
+        line-height: 1.75;
+      }
+
+      .hero-cta {
+        display: flex;
+        gap: 16px;
+        margin-top: 36px;
+        flex-wrap: wrap;
+      }
+
+      .btn-primary {
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        color: var(--accent);
+        border: 1px solid var(--accent);
+        padding: 12px 24px;
+        border-radius: var(--radius);
+        transition: background var(--transition);
+      }
+
+      .btn-primary:hover {
+        background: var(--accent-dim);
+      }
+
+      .btn-secondary {
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        border: 1px solid var(--border);
+        padding: 12px 24px;
+        border-radius: var(--radius);
+        transition:
+          color var(--transition),
+          border-color var(--transition);
+      }
+
+      .btn-secondary:hover {
+        color: var(--accent);
+        border-color: var(--accent);
+      }
+
+      .hero-photo-wrap {
+        display: flex;
+        justify-content: center;
+      }
+
+      .hero-photo {
+        width: 320px;
+        height: 320px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 3px solid var(--accent);
+        box-shadow: 0 0 40px rgba(100, 255, 218, 0.15);
+      }
+
+      @media (max-width: 768px) {
+        .hero-inner {
+          grid-template-columns: 1fr;
+          text-align: center;
+          gap: 36px;
+        }
+        .hero-photo-wrap {
+          order: -1;
+        }
+        .hero-photo {
+          width: 220px;
+          height: 220px;
+        }
+        .hero-bio {
+          margin: 0 auto;
+        }
+        .hero-cta {
+          justify-content: center;
+        }
+        .hero {
+          padding: calc(var(--nav-height) + 20px) 20px 40px;
+        }
+      }
+
+      /* ============================================================
+       SECTION SHELL (reusable)
+    ============================================================ */
+      .section {
+        padding: 100px 32px;
+        position: relative;
+      }
+
+      .section-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 60px;
+      }
+
+      .section-header h2 {
+        font-size: clamp(1.4rem, 3vw, 1.8rem);
+        color: var(--text-primary);
+        white-space: nowrap;
+      }
+
+      .section-header .accent-num {
+        font-family: var(--font-mono);
+        font-size: 1rem;
+        color: var(--accent);
+        margin-right: 4px;
+      }
+
+      .section-header::after {
+        content: "";
+        display: block;
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      @media (max-width: 768px) {
+        .section {
+          padding: 70px 20px;
+        }
+      }
+
+      /* ============================================================
+       EXPERIENCE
+    ============================================================ */
+      .exp-layout {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 48px;
+        align-items: start;
+      }
+
+      .exp-sidebar h3 {
+        font-size: 1.3rem;
+        color: var(--text-primary);
+        margin-bottom: 16px;
+      }
+
+      .exp-sidebar p {
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        line-height: 1.75;
+        margin-bottom: 24px;
+      }
+
+      .btn-cv {
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+        color: var(--accent);
+        border: 1px solid var(--accent);
+        padding: 10px 20px;
+        border-radius: var(--radius);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: background var(--transition);
+      }
+
+      .btn-cv:hover {
+        background: var(--accent-dim);
+      }
+
+      .exp-list {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        max-height: 520px;
+        overflow-y: auto;
+        padding-right: 8px;
+      }
+
+      .exp-list::-webkit-scrollbar {
+        width: 4px;
+      }
+      .exp-list::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 4px;
+      }
+
+      .exp-card {
+        display: grid;
+        grid-template-columns: 160px 1fr;
+        gap: 20px;
+        padding: 20px;
+        border-radius: var(--radius);
+        transition:
+          background var(--transition),
+          box-shadow var(--transition);
+      }
+
+      .exp-card:hover {
+        background: var(--bg-card);
+        box-shadow: var(--shadow);
+      }
+
+      .exp-date {
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        padding-top: 3px;
+        line-height: 1.5;
+      }
+
+      .exp-body h4 {
+        font-size: 1rem;
+        color: var(--text-primary);
+        margin-bottom: 8px;
+        line-height: 1.4;
+      }
+
+      .exp-card:hover .exp-body h4 {
+        color: var(--accent);
+      }
+
+      .exp-body ul {
+        list-style: disc;
+        padding-left: 18px;
+        margin-bottom: 12px;
+      }
+
+      .exp-body ul li {
+        font-size: 0.88rem;
+        color: var(--text-muted);
+        line-height: 1.65;
+        margin-bottom: 6px;
+      }
+
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 10px;
+      }
+
+      .tag {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--accent);
+        background: var(--accent-dim);
+        border: 1px solid var(--border);
+        padding: 3px 9px;
+        border-radius: 4px;
+      }
+
+      @media (max-width: 900px) {
+        .exp-layout {
+          grid-template-columns: 1fr;
+        }
+        .exp-sidebar {
+          order: 0;
+        }
+        .exp-list {
+          max-height: 60vh;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .exp-card {
+          grid-template-columns: 1fr;
+          gap: 8px;
+        }
+      }
+
+      /* ============================================================
+       PROJECTS
+    ============================================================ */
+      .projects-grid {
+        display: grid;
+        gap: 16px;
+      }
+
+      .project-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 28px 32px;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 28px;
+        align-items: center;
+        transition:
+          background var(--transition),
+          box-shadow var(--transition),
+          transform var(--transition);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .project-card:hover {
+        background: var(--bg-hover);
+        box-shadow: var(--shadow);
+        transform: translateY(-2px);
+      }
+
+      .project-img {
+        border-radius: calc(var(--radius) - 2px);
+        overflow: hidden;
+        aspect-ratio: 16/10;
+        background: var(--bg-secondary);
+      }
+
+      .project-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+      }
+
+      .project-card:hover .project-img img {
+        transform: scale(1.04);
+      }
+
+      .project-label {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--accent);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+
+      .project-title {
+        font-size: 1.2rem;
+        color: var(--text-primary);
+        margin-bottom: 10px;
+        line-height: 1.35;
+      }
+
+      .project-card:hover .project-title {
+        color: var(--accent);
+      }
+
+      .project-desc {
+        font-size: 0.88rem;
+        color: var(--text-muted);
+        line-height: 1.7;
+        margin-bottom: 16px;
+      }
+
+      .project-links {
+        display: flex;
+        gap: 14px;
+        margin-top: 4px;
+      }
+
+      .project-link {
+        color: var(--text-muted);
+        font-size: 20px;
+        transition:
+          color var(--transition),
+          transform var(--transition);
+      }
+
+      .project-link:hover {
+        color: var(--accent);
+        transform: translateY(-2px);
+      }
+
+      @media (max-width: 900px) {
+        .project-card {
+          grid-template-columns: 1fr;
+          padding: 20px;
+        }
+        .project-img {
+          display: none;
+        }
+      }
+
+      /* ============================================================
+       BLOG
+    ============================================================ */
+      .blog-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .blog-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition:
+          box-shadow var(--transition),
+          transform var(--transition);
+        color: inherit;
+      }
+
+      .blog-card:hover {
+        box-shadow: var(--shadow);
+        transform: translateY(-3px);
+      }
+
+      .blog-thumb-wrap {
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+
+      .blog-thumb {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        display: block;
+        background: var(--bg-secondary);
+        transition: transform 0.4s ease;
+      }
+
+      .blog-card:hover .blog-thumb {
+        transform: scale(1.03);
+      }
+
+      .blog-body {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex: 1;
+      }
+
+      .blog-meta {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .blog-tag {
+        color: var(--accent);
+        background: var(--accent-dim);
+        border: 1px solid var(--border);
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.68rem;
+      }
+
+      .blog-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        line-height: 1.4;
+      }
+
+      .blog-card:hover .blog-title {
+        color: var(--accent);
+      }
+
+      .blog-excerpt {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        line-height: 1.65;
+        flex: 1;
+        display: -webkit-box;
+        /* stylelint-disable-next-line property-no-vendor-prefix */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .blog-read-more {
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        color: var(--accent);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: gap var(--transition);
+        margin-top: 4px;
+      }
+
+      .blog-card:hover .blog-read-more {
+        gap: 10px;
+      }
+
+      .blog-skeleton {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        height: 320px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .blog-skeleton::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          var(--bg-hover) 50%,
+          transparent 100%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 1.4s infinite;
+      }
+
+      @keyframes shimmer {
+        0% {
+          background-position: -200% 0;
+        }
+        100% {
+          background-position: 200% 0;
+        }
+      }
+
+      .blog-empty {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        border: 1px dashed var(--border);
+        border-radius: var(--radius);
+      }
+
+      .blog-empty i {
+        font-size: 2.5rem;
+        display: block;
+        margin-bottom: 12px;
+        color: var(--border);
+      }
+
+      .blog-error {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 40px 20px;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        border: 1px dashed var(--border);
+        border-radius: var(--radius);
+      }
+
+      /* ============================================================
+       CONTACT
+    ============================================================ */
+      .contact-section {
+        text-align: center;
+        padding: 150px 32px;
+      }
+
+      .contact-label {
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        color: var(--accent);
+        margin-bottom: 16px;
+      }
+
+      .contact-heading {
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 20px;
+      }
+
+      .contact-body {
+        font-size: 1rem;
+        color: var(--text-muted);
+        max-width: 520px;
+        margin: 0 auto 40px;
+        line-height: 1.75;
+      }
+
+      .contact-body a {
+        color: var(--accent);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      /* ============================================================
+       FOOTER
+    ============================================================ */
+      footer {
+        text-align: center;
+        padding: 24px;
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        border-top: 1px solid var(--border);
+      }
+
+      footer a {
+        color: var(--accent);
+      }
+
+      /* ============================================================
+       SCROLL FADE-IN
+    ============================================================ */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition:
+          opacity 0.5s ease,
+          transform 0.5s ease;
+      }
+
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ============================================================
+       REDUCED MOTION
+    ============================================================ */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          transition: none !important;
+          animation: none !important;
+        }
+        .fade-in {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
   </head>
+
   <body>
     <div id="flashlight"></div>
 
-    <!-- Social Media Sidebar -->
-    <div class="social-media-sidebar">
-      <a href="https://www.linkedin.com/in/afghaizzamtursina/" target="_blank">
-        <i class="bx bxl-linkedin-square" aria-label="LinkedIn"></i>
+    <!-- Social Sidebar -->
+    <aside class="social-sidebar">
+      <a
+        href="https://www.linkedin.com/in/afghaizzamtursina/"
+        target="_blank"
+        rel="noopener"
+        aria-label="LinkedIn"
+      >
+        <i class="bx bxl-linkedin-square"></i>
       </a>
-      <a href="https://www.instagram.com/izzamtursina/" target="_blank">
-        <i class="bx bxl-instagram" aria-label="Instagram"></i>
+      <a
+        href="https://www.instagram.com/izzamtursina/"
+        target="_blank"
+        rel="noopener"
+        aria-label="Instagram"
+      >
+        <i class="bx bxl-instagram"></i>
       </a>
-    </div>
-    <!-- End Social Media Sidebar -->
+      <a
+        id="sidebar-medium"
+        href="#"
+        target="_blank"
+        rel="noopener"
+        aria-label="Medium"
+      >
+        <i class="bx bxl-medium-square"></i>
+      </a>
+    </aside>
 
     <!-- Header -->
-    <header>
+    <header id="header">
       <nav>
-        <div class="logo">
-          <a href="#hero">
-            <img src="assets/images/icon/logo-it-white.svg" alt="Logo" />
-          </a>
+        <a href="#hero" class="nav-logo">
+          <img src="assets/images/icon/logo-it-white.svg" alt="IT Logo" />
+        </a>
+        <ul class="nav-links" id="nav-links"></ul>
+        <div style="display: flex; align-items: center; gap: 8px">
+          <button
+            class="lang-toggle"
+            id="lang-toggle"
+            aria-label="Toggle language"
+          >
+            EN
+          </button>
+          <button
+            class="theme-toggle"
+            id="theme-toggle"
+            aria-label="Toggle theme"
+          >
+            <i class="bx bx-moon" id="theme-icon"></i>
+          </button>
+          <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+          </button>
         </div>
-        <div class="menu-icon" id="menu-icon" onclick="toggleMenu()">
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-        <ul id="nav-list">
-          <li><a href="#hero">About</a></li>
-          <li><a href="#experiences">Experience</a></li>
-          <li><a href="#project">Project</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
       </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section id="hero" class="hero-section">
-      <div class="hero-container">
-        <div class="hero-left">
-          <h1>Afgha Izzam Tursina</h1>
-          <h2> Jr. CCUS Research Analyst | Coding Enthusiast</h2>
-          <p>
-            Petroleum engineering graduate currently employed as a Junior Research Analyst in Carbon Capture, Utilization, and Storage (CCUS), with practical experience in applying data science, reservoir engineering, and CO₂ sequestration studies.
-          </p>
+    <!-- ============ HERO ============ -->
+    <section id="hero" class="hero">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <p class="hero-greeting">Hi, my name is</p>
+          <h1 class="hero-name" id="hero-name"></h1>
+          <p class="hero-role" id="hero-role"></p>
+          <p class="hero-subtitle" id="hero-subtitle"></p>
+          <p class="hero-bio" id="hero-bio"></p>
+          <div class="hero-cta">
+            <a href="#experiences" class="btn-primary" id="hero-work-btn"
+              >View My Work</a
+            >
+            <a id="hero-cv-btn" href="#" class="btn-secondary" download>
+              <i class="bx bx-download"></i>
+              <span data-i18n="cta_cv">Download CV</span>
+            </a>
+          </div>
         </div>
-        <div class="hero-right">
+        <div class="hero-photo-wrap">
           <img
-            src=".\assets\images\profile-picture.svg"
-            alt="Your Photo"
+            src="assets/images/profile-picture.svg"
+            alt="Afgha Izzam Tursina"
             class="hero-photo"
           />
         </div>
       </div>
-    </section>
-
-    <!-- Main Content with 3 Containers -->
-    <div class="main-content">
-      <div class="left-column"></div>
-      <div class="center-column">
-        <!-- Experience Section -->
-        <section id="experiences" class="experiences-section">
-          <div class="experiences-container">
-            <!-- Left Column -->
-            <div class="experiences-left">
-              <h2>Where I've Worked</h2>
-              <p>
-                Here, you'll find a showcase of my experiences accumulated over
-                the years. While I bring valuable expertise, I remain open to
-                exploring new opportunities and challenges, ready to adapt and
-                contribute to a variety of roles.
-              </p>
-              <!-- Add a CV Button -->
-              <a
-                href="https://drive.google.com/file/d/11QZvdejGE8d5aKgxFUr7qHaOhO0VpKtm/view?usp=sharing"
-                target="_blank"
-                class="btn-cv"
-                >View Full Resume</a
-              >
-            </div>
-
-            <!-- Right Column -->
-            <div class="experiences-right">
-              <div class="experience-row" id="experience-00">
-                <div class="experience-year">
-                  <h4>May 2025 – Present</h4>
-                </div>
-                <div class="experience-details">
-                  <h3>
-                    Rystad Energy - Jr. CCUS Research Analyst
-                  </h3>
-                  <div class="tech-stack">
-                    <span>Excel</span>
-                    <span>Power BI</span>
-                  </div>
-                </div>
-              </div>
-              <div class="experience-row" id="experience-01">
-                <div class="experience-year">
-                  <h4>Oct 2024 – May 2025</h4>
-                </div>
-                <div class="experience-details">
-                  <h3>
-                    Gada Energi – Reservoir Engineer Support for
-                    KUFPEC Indonesia in Natuna D-Alpha Joint Study
-                  </h3>
-                  <ul>
-                    <li>
-                      Interpret reservoir properties through nodal, petrophysical, and fluid analyses, and perform reservoir simulations, including initialization, history matching, and production forecasting. Plan and design development wells to optimize field performance.
-                    </li>
-                    <li>
-                      Perform feasibility studies and reservoir simulations for CO₂ injection in aquifers, assessing risks and potential for carbon sequestration.
-                    </li>
-                    <li>
-                      Streamline data processing and improve carbonate reservoir operations using Python programming.
-                    </li>
-                    <li>
-                      Compile technical reports and collaborate with KUFPEC Indonesia's Subsurface Team, contributing to strategic planning for the Natuna D-Alpha Field.
-                    </li>
-                  </ul>
-
-                  <div class="tech-stack">
-                    <span>Petrel</span>
-                    <span>TNavigator</span>
-                    <span>Prosper</span>
-                    <span>PVTp</span>
-                    <span>Openserver</span>
-                    <span>Python</span>
-                    <span>Excel</span>
-                  </div>
-                </div>
-              </div>
-              <div class="experience-row" id="experience-02">
-                <div class="experience-year">
-                  <h4>Jul 2024 – Sep 2024</h4>
-                </div>
-                <div class="experience-details">
-                  <h3>
-                    Gada Energi – Reservoir Engineer Support for
-                    PHE OSES in GGR Study
-                  </h3>
-                  <ul>
-                    <li>
-                      Conducted reservoir simulation for history matching and material balance analysis.
-                    </li>
-                    <li>
-                      Integrated Python programming to streamline data processing for material balance and property adjustments, enhancing efficiency in managing a sandstone reservoir with 50+ wells and 4 perforated layers.
-                    </li>
-                    <li>
-                      Prepared detailed reports and collaborated with Pertamina Hulu Energi Offshore Southeast Sumatera's (PHE OSES) Subsurface Team on strategic initiatives for the Zelda Field.
-                    </li>
-                  </ul>
-                  <div class="tech-stack">
-                    <span>Petrel</span>
-                    <span>OFM</span>
-                    <span>Tnavigator</span>
-                    <span>MBAL</span>
-                    <span>Python</span>
-                    <span>Excel</span>
-                  </div>
-                </div>
-              </div>
-              <div class="experience-row" id="experience-03">
-                <div class="experience-year">
-                  <h4>Jan 2023 – Jul 2024</h4>
-                </div>
-                <div class="experience-details">
-                  <h3>
-                    Research Assistant for Research, Community Service, and
-                    Innovation Program (PPMI)
-                  </h3>
-                  <ul>
-                    <li>
-                      Developed Python code for well log data processing,
-                      offering greater flexibility and customization compared to
-                      conventional software.
-                    </li>
-                    <li>
-                      Created Python code to optimize pipeline route, enabling
-                      accurate estimation of pipe lengths and construction
-                      costs, improving cost analysis for economic feasibility
-                      studies in pipeline projects.
-                    </li>
-                  </ul>
-                  <div class="tech-stack">
-                    <span>Python</span>
-                  </div>
-                </div>
-              </div>
-              <div class="experience-row" id="experience-04">
-                <div class="experience-year">
-                  <h4>Jun 2023 – Jul 2023</h4>
-                </div>
-                <div class="experience-details">
-                  <h3>
-                    Pertamina EP – Production Engineer for Practical Work
-                    Program in Zona 7 Tambun Field
-                  </h3>
-                  <ul>
-                    <li>
-                      Gained experience and knowledge in well perforation and
-                      artificial lifting techniques. Completed a research
-                      project titled "Utilizing Quadrant Mapping for ESP Wells
-                      Monitoring in XYZ Field," achieving an A-grade score of
-                      87.75/100.
-                    </li>
-                  </ul>
-                  <div class="tech-stack">
-                    <span>Python</span>
-                    <span>Excel</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Project Section -->
-        <section id="project" class="project-section">
-          <h2 class="section-title">Some Things I've Built</h2>
-          <div class="carousel-container">
-            <div class="projects-container" id="projects-carousel">
-              <!-- Single Project -->
-              <div class="project-item" id="project-01">
-                <div class="project-image">
-                  <img
-                    src="assets/images/projects/1_well placements.png"
-                    alt="Halcyon Theme"
-                  />
-                </div>
-                <div class="project-content">
-                  <p class="featured-project">Personal Project</p>
-                  <h3 class="project-title">
-                    Optimizing Development Well Targets
-                  </h3>
-                  <p class="project-description">
-                    Designed a strategy to pinpoint optimal sweat points for
-                    development wells by processing KH-GIIP maps exported from
-                    Petrel using Python. Constraints included a maximum distance
-                    of 3 km from the platform, minimum 500 m between targets, KH
-                    above 10 D.ft, and ranking targets based on GIIP values.
-                  </p>
-
-                  <ul class="project-tech-list">
-                    <li>Petrel</li>
-                    <li>Python</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="project-item" id="project-02">
-                <div class="project-image">
-                  <img
-                    src="assets\images\projects\2_material balance pressure.png"
-                    alt="Halcyon Theme"
-                  />
-                </div>
-                <div class="project-content">
-                  <p class="featured-project">Personal Project</p>
-                  <h3 class="project-title">
-                    Time-Dependent Pressure Prediction
-                  </h3>
-                  <p class="project-description">
-                    Built a machine learning model to predict formation pressure
-                    over time for layers without existing data. Pressure and
-                    production data were split by formation layers, using field
-                    pressure and production inputs for training. This approach
-                    improved accuracy in reservoir pressure prediction.
-                  </p>
-
-                  <ul class="project-tech-list">
-                    <li>OFM</li>
-                    <li>MBAL</li>
-                    <li>Python</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="project-item" id="project-03">
-                <div class="project-image">
-                  <img
-                    src="assets/images/projects/3_well correlation.png"
-                    alt="Halcyon Theme"
-                  />
-                </div>
-                <div class="project-content">
-                  <p class="featured-project">Personal Project</p>
-                  <h3 class="project-title">
-                    Well Correlation with Dynamic Time Warping
-                  </h3>
-                  <p class="project-description">
-                    Developed a predictive model to analyze well correlations
-                    using gamma ray data. Implemented the Dynamic Time Warping
-                    algorithm to assess and compare patterns across multiple wells
-                    for geological insight.
-                  </p>
-
-                  <ul class="project-tech-list">
-                    <li>Python</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="project-item" id="project-04">
-                <div class="project-image">
-                  <img
-                    src="assets\images\projects\4_distance optimization.png"
-                    alt="Halcyon Theme"
-                  />
-                </div>
-                <div class="project-content">
-                  <p class="featured-project">Personal Project</p>
-                  <h3 class="project-title">
-                    Optimal Pipeline Routing with Dijkstra's Algorithm
-                  </h3>
-                  <p class="project-description">
-                    Calculated the optimal distance between points considering
-                    pipeline distance and pressure drop constraints. Using
-                    Dijkstra’s algorithm, the project provided cost-efficient and
-                    technically viable routing solutions.
-                  </p>
-
-                  <ul class="project-tech-list">
-                    <li>Python</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="project-item" id="project-05">
-                <div class="project-image">
-                  <img
-                    src="assets/images/projects/5_well log analysis.png"
-                    alt="Halcyon Theme"
-                  />
-                </div>
-                <div class="project-content">
-                  <p class="featured-project">Personal Project</p>
-                  <h3 class="project-title">
-                    Well Log Data Processing using Python
-                  </h3>
-                  <p class="project-description">
-                    Automated well log data processing using Python to enhance
-                    computational flexibility and enable dynamic, user-defined
-                    calculations for well log analysis.
-                  </p>
-
-                  <ul class="project-tech-list">
-                    <li>Python</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="project-item" id="project-06">
-                <div class="project-image">
-                  <img
-                    src="assets\images\projects\6_rock type prediction.png"
-                    alt="Halcyon Theme"
-                  />
-                </div>
-                <div class="project-content">
-                  <p class="featured-project">Personal Project</p>
-                  <h3 class="project-title">
-                    Predicting Rock Types from Well Log Data Using Machine
-                    Learning
-                  </h3>
-                  <p class="project-description">
-                    Developed a machine learning model to predict rock types
-                    across all depths of a well without rock type data. The model
-                    was trained using data from other wells within the same field,
-                    ensuring consistency and reliability in predictions.
-                  </p>
-
-                  <ul class="project-tech-list">
-                    <li>Python</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="project-item" id="project-07">
-                <div class="project-image">
-                  <img
-                    src="assets\images\projects\7_business intelligence.png"
-                    alt="Halcyon Theme"
-                  />
-                </div>
-                <div class="project-content">
-                  <p class="featured-project">Personal Project</p>
-                  <h3 class="project-title">
-                    Business Intelligence Dashboard for a Fictional Manufacturing
-                    Company
-                  </h3>
-                  <p class="project-description">
-                    Designed and developed a dynamic business intelligence
-                    solution for AdventureWorks Cycles, a fictional manufacturing
-                    company.Transformed raw data into insights using Power Query,
-                    relational data modeling, and DAX calculations. Delivered
-                    reports to track KPIs, analyze product trends, and identify
-                    high-value customers, simulating real-world business
-                    intelligence tasks
-                  </p>
-
-                  <ul class="project-tech-list">
-                    <li>Power BI</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <button class="carousel-button prev" id="prev-project">&#10094;</button>
-            <button class="carousel-button next" id="next-project">&#10095;</button>
-            <div class="carousel-pagination" id="project-pagination"></div>
-          </div>
-          <div class="project-updates highlight">
-            <p>
-              This website is a dynamic space, continuously updated with new
-              projects and improvements. Exciting developments are in the works,
-              so stay tuned for updates!
-            </p>
-          </div>
-        </section>
+      <div class="scroll-indicator" aria-hidden="true">
+        <span>scroll</span>
+        <div class="scroll-chevron"></div>
       </div>
-      <div class="right-column"></div>
-    </div>
-
-    <!-- Footer -->
-    <section id="contact" class="contact-section">
-      <h2 class="contact-title">Get In Touch</h2>
-      <h3 class="contact-description">
-        I'm not actively looking for new opportunities right now, but I'd still love to hear from you!
-        Whether you have a question, something interesting to share, or just want to connect, feel free to reach out. You can email me at
-        <a href="mailto:afghaizzam21@gmail.com" class="highlighted-email"
-          >afghaizzam21@gmail.com</a
-        > or connect with me on LinkedIn. I'll do my best to respond promptly!</a
-        >
-      </h3>
     </section>
 
-    <footer class="footer-section">
-      <p>Built by Afgha Izzam Tursina</p>
+    <!-- ============ EXPERIENCE ============ -->
+    <section id="experiences" class="section">
+      <div class="section-inner">
+        <div class="section-header">
+          <h2>
+            <span class="accent-num">01.</span>
+            <span data-i18n="sec_exp">Where I've Worked</span>
+          </h2>
+        </div>
+        <div class="exp-layout">
+          <div class="exp-sidebar fade-in">
+            <h3 data-i18n="exp_heading">Experience</h3>
+            <p data-i18n="exp_blurb">
+              A track record spanning petroleum engineering, reservoir
+              simulation, CCUS research, and data science — applied across
+              real-world fields in Indonesia.
+            </p>
+            <a id="cv-btn" href="#" class="btn-cv" download>
+              <i class="bx bx-download"></i>
+              <span data-i18n="cv_btn">Download CV</span>
+            </a>
+          </div>
+          <div class="exp-list" id="exp-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROJECTS ============ -->
+    <section
+      id="project"
+      class="section"
+      style="background: var(--bg-secondary)"
+    >
+      <div class="section-inner">
+        <div class="section-header">
+          <h2>
+            <span class="accent-num">02.</span>
+            <span data-i18n="sec_proj">Things I've Built</span>
+          </h2>
+        </div>
+        <div class="projects-grid" id="projects-grid"></div>
+      </div>
+    </section>
+
+    <!-- ============ BLOG ============ -->
+    <section id="blog" class="section">
+      <div class="section-inner">
+        <div class="section-header">
+          <h2>
+            <span class="accent-num">03.</span>
+            <span data-i18n="sec_blog">Writing</span>
+          </h2>
+        </div>
+        <div class="blog-grid" id="blog-grid"></div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section id="contact" class="contact-section">
+      <p class="contact-label" data-i18n="contact_label">04. What's Next?</p>
+      <h2 class="contact-heading" data-i18n="contact_heading">Get In Touch</h2>
+      <p class="contact-body" id="contact-body"></p>
+      <a
+        id="contact-email-btn"
+        href="#"
+        class="btn-primary"
+        data-i18n="contact_btn"
+        >Say Hello</a
+      >
+    </section>
+
+    <footer>
+      <p>
+        <span data-i18n="footer">Designed & built by</span>
+        <a href="https://www.linkedin.com/in/afghaizzamtursina/" target="_blank"
+          >Afgha Izzam Tursina</a
+        >
+      </p>
     </footer>
 
-    <!-- Place this script just before the closing </body> -->
-    <script src="script.js"></script>
+    <!-- ============================================================
+       DATA — EDIT THIS OBJECT TO UPDATE THE ENTIRE SITE
+  ============================================================ -->
+    <script>
+      const SITE = {
+        /* ── Personal info ──────────────────────────────── */
+        name: "Afgha Izzam Tursina",
+        email: "tursina.izzam@gmail.com",
+        cvUrl:
+          "https://drive.google.com/uc?export=download&id=11QZvdejGE8d5aKgxFUr7qHaOhO0VpKtm",
+
+        /* ── Translations ────────────────────────────────── */
+        i18n: {
+          greeting: { en: "Hi, my name is", id: "Hai, nama saya" },
+          role: { en: "CCUS Research Analyst", id: "Analis Riset CCUS" },
+          at_company: { en: "@ Rystad Energy", id: "@ Rystad Energy" },
+          subtitle: { en: "Coding Enthusiast", id: "Penggemar Coding" },
+          bio: {
+            en: "Petroleum engineering graduate working as a Junior Research Analyst in CCUS at Rystad Energy. Interested in energy regulation, data science, and the economics of the energy transition.",
+            id: "Lulusan teknik perminyakan yang bekerja sebagai Junior Research Analyst CCUS di Rystad Energy. Tertarik pada regulasi energi, data science, dan ekonomi transisi energi.",
+          },
+          cta_work: { en: "View My Work", id: "Lihat Pekerjaan Saya" },
+          cta_cv: { en: "Download CV", id: "Unduh CV" },
+          nav_about: { en: "About", id: "Tentang" },
+          nav_exp: { en: "Experience", id: "Pengalaman" },
+          nav_proj: { en: "Projects", id: "Proyek" },
+          nav_blog: { en: "Blog", id: "Blog" },
+          nav_contact: { en: "Contact", id: "Kontak" },
+          nav_cv: { en: "Download CV", id: "Unduh CV" },
+          exp_heading: { en: "Experience", id: "Pengalaman" },
+          exp_blurb: {
+            en: "A track record spanning petroleum engineering, reservoir simulation, CCUS research, and data science — applied across real-world fields in Indonesia.",
+            id: "Rekam jejak yang mencakup teknik perminyakan, simulasi reservoir, riset CCUS, dan data science — diterapkan di lapangan migas nyata di Indonesia.",
+          },
+          cv_btn: { en: "Download CV", id: "Unduh CV" },
+          sec_exp: { en: "Where I've Worked", id: "Tempat Saya Bekerja" },
+          sec_proj: {
+            en: "Things I've Built",
+            id: "Proyek yang Pernah Saya Buat",
+          },
+          sec_blog: { en: "Writing", id: "Tulisan" },
+          contact_label: { en: "04. What's Next?", id: "04. Apa Selanjutnya?" },
+          contact_heading: { en: "Get In Touch", id: "Hubungi Saya" },
+          contact_note: {
+            en: `I'm not actively looking for new opportunities right now, but I'd love to hear from you. Whether it's a question, something interesting to share, or just to connect — reach out at <a href="mailto:tursina.izzam@gmail.com">tursina.izzam@gmail.com</a> or on LinkedIn.`,
+            id: `Saat ini saya tidak sedang aktif mencari peluang baru, namun saya selalu senang dihubungi. Entah itu pertanyaan, sesuatu yang menarik untuk dibagikan, atau sekadar berkenalan — hubungi saya di <a href="mailto:tursina.izzam@gmail.com">tursina.izzam@gmail.com</a> atau LinkedIn.`,
+          },
+          contact_btn: { en: "Say Hello", id: "Sapa Saya" },
+          proj_label: { en: "Personal Project", id: "Proyek Pribadi" },
+          blog_read: { en: "Read on Medium", id: "Baca di Medium" },
+          blog_empty: {
+            en: "Writing section coming soon — notes on CCUS, energy regulation, and data science in progress.",
+            id: "Bagian tulisan akan segera hadir — catatan seputar CCUS, regulasi energi, dan data science sedang dalam proses.",
+          },
+          blog_whitelist_empty: {
+            en: "No whitelisted articles found yet. Add article URLs to <code>SITE.blog.whitelist</code>.",
+            id: "Belum ada artikel yang ditampilkan. Tambahkan URL artikel ke <code>SITE.blog.whitelist</code>.",
+          },
+          blog_error: {
+            en: "Couldn't load articles right now.",
+            id: "Artikel tidak dapat dimuat saat ini.",
+          },
+          blog_medium_link: { en: "Read on Medium →", id: "Baca di Medium →" },
+          footer: { en: "Designed & built by", id: "Dirancang & dibuat oleh" },
+        },
+
+        /* ── Experience ──────────────────────────────────── */
+        experience: [
+          {
+            date: "May 2025 – Present",
+            role: "CCUS Research Analyst",
+            company: "Rystad Energy",
+            bullets: {
+              en: [
+                "Authored and published in-depth research reports and market commentary covering the evolving CCUS landscape across key Asia-Pacific markets.",
+                "Analyze, process, and synthesize data from various sources to support and develop and maintain a comprehensive database of Asia-Pacific CCUS projects, spanning commercial-scale and pilot demonstration initiatives, alongside tracking regional policy and regulatory developments.",
+                "Deliver technical and commercial presentations to both internal stakeholders and external clients.",
+                "Engage with clients to present research findings and collect feedback for product enhancement.",
+              ],
+              id: [
+                "Menulis dan menerbitkan laporan riset mendalam serta market commentary yang mencakup perkembangan lanskap CCUS di pasar-pasar utama Asia-Pasifik.",
+                "Menganalisis, memproses, dan mensintesis data dari berbagai sumber untuk mendukung pengembangan dan pemeliharaan basis data komprehensif proyek CCUS Asia-Pasifik, mencakup inisiatif skala komersial dan demonstrasi percontohan, serta memantau perkembangan kebijakan dan regulasi regional.",
+                "Menyampaikan presentasi teknis dan komersial kepada pemangku kepentingan internal maupun klien eksternal.",
+                "Berinteraksi dengan klien untuk mempresentasikan temuan riset dan mengumpulkan umpan balik untuk peningkatan produk.",
+              ],
+            },
+            tags: ["Excel", "Power BI"],
+          },
+          {
+            date: "Oct 2024 – May 2025",
+            role: "Reservoir Engineer Support",
+            company:
+              "Gada Energi · KUFPEC Indonesia — Natuna D-Alpha Joint Study",
+            bullets: {
+              en: [
+                "Interpreted reservoir properties via nodal, petrophysical, and fluid analyses; performed reservoir simulations including initialization, history matching, and production forecasting.",
+                "Conducted CO₂ injection feasibility studies in aquifers, assessing risks for carbon sequestration.",
+                "Streamlined data processing for carbonate reservoir operations using Python.",
+                "Compiled technical reports and collaborated with KUFPEC Indonesia's Subsurface Team.",
+              ],
+              id: [
+                "Menginterpretasi properti reservoir melalui analisis nodal, petrofisika, dan fluida; melakukan simulasi reservoir termasuk inisialisasi, history matching, dan peramalan produksi.",
+                "Melakukan studi kelayakan injeksi CO₂ pada akuifer untuk mengkaji risiko sekuestrasi karbon.",
+                "Mengotomasi pemrosesan data operasi reservoir karbonat menggunakan Python.",
+                "Menyusun laporan teknis dan berkolaborasi dengan Tim Subsurface KUFPEC Indonesia.",
+              ],
+            },
+            tags: [
+              "Petrel",
+              "TNavigator",
+              "Prosper",
+              "PVTp",
+              "Openserver",
+              "Python",
+              "Excel",
+            ],
+          },
+          {
+            date: "Jul 2024 – Sep 2024",
+            role: "Reservoir Engineer Support",
+            company: "Gada Energi · PHE OSES — GGR Study (Zelda Field)",
+            bullets: {
+              en: [
+                "Conducted reservoir simulation for history matching and material balance analysis.",
+                "Integrated Python to streamline data processing for a sandstone reservoir with 50+ wells and 4 perforated layers.",
+                "Prepared detailed reports and collaborated with PHE OSES's Subsurface Team.",
+              ],
+              id: [
+                "Melakukan simulasi reservoir untuk history matching dan analisis material balance.",
+                "Mengintegrasikan Python untuk mengotomasi pemrosesan data pada reservoir batupasir dengan 50+ sumur dan 4 lapisan perforasi.",
+                "Menyusun laporan teknis dan berkolaborasi dengan Tim Subsurface PHE OSES.",
+              ],
+            },
+            tags: ["Petrel", "OFM", "TNavigator", "MBAL", "Python", "Excel"],
+          },
+          {
+            date: "Jan 2023 – Jul 2024",
+            role: "Research Assistant",
+            company: "Research, Community Service & Innovation Program (PPMI)",
+            bullets: {
+              en: [
+                "Developed Python code for well log data processing, enabling greater flexibility than conventional software.",
+                "Created Python code to optimize pipeline routing and estimate pipe lengths and construction costs.",
+              ],
+              id: [
+                "Mengembangkan kode Python untuk pemrosesan data well log, memberikan fleksibilitas lebih besar dibanding perangkat lunak konvensional.",
+                "Membuat kode Python untuk mengoptimalkan jalur pipa dan mengestimasi panjang pipa serta biaya konstruksi.",
+              ],
+            },
+            tags: ["Python"],
+          },
+          {
+            date: "Jun 2023 – Jul 2023",
+            role: "Production Engineer Intern",
+            company: "Pertamina EP · Zona 7 Tambun Field",
+            bullets: {
+              en: [
+                "Gained hands-on experience in well perforation and artificial lifting. Completed a research project on ESP well monitoring using Quadrant Mapping, scoring 87.75/100.",
+              ],
+              id: [
+                "Memperoleh pengalaman langsung dalam perforasi sumur dan artificial lifting. Menyelesaikan proyek riset pemantauan sumur ESP menggunakan Quadrant Mapping dengan skor 87,75/100.",
+              ],
+            },
+            tags: ["Python", "Excel"],
+          },
+        ],
+
+        /* ── Projects ────────────────────────────────────── */
+        projects: [
+          {
+            title: {
+              en: "Optimizing Development Well Targets",
+              id: "Optimasi Target Sumur Pengembangan",
+            },
+            desc: {
+              en: "Pinpointed optimal sweet spots for development wells by processing KH-GIIP maps from Petrel with Python. Constraints: max 3 km from platform, min 500 m between targets, KH > 10 D.ft, ranked by GIIP.",
+              id: "Menentukan lokasi optimal sumur pengembangan dengan memproses peta KH-GIIP dari Petrel menggunakan Python. Batasan: maks 3 km dari platform, min 500 m antar target, KH > 10 D.ft, diurutkan berdasarkan GIIP.",
+            },
+            image: "assets/images/projects/1_well placements.png",
+            tags: ["Petrel", "Python"],
+            github: "",
+            demo: "",
+          },
+          {
+            title: {
+              en: "Time-Dependent Pressure Prediction",
+              id: "Prediksi Tekanan Berbasis Waktu",
+            },
+            desc: {
+              en: "ML model to predict formation pressure over time for layers without existing data. Pressure and production data split by formation layer, using field inputs for training.",
+              id: "Model ML untuk memprediksi tekanan formasi terhadap waktu pada lapisan yang belum memiliki data. Data tekanan dan produksi dipisahkan per lapisan formasi, menggunakan input lapangan untuk pelatihan model.",
+            },
+            image: "assets/images/projects/2_material balance pressure.png",
+            tags: ["OFM", "MBAL", "Python"],
+            github: "",
+            demo: "",
+          },
+          {
+            title: {
+              en: "Well Correlation with Dynamic Time Warping",
+              id: "Korelasi Sumur dengan Dynamic Time Warping",
+            },
+            desc: {
+              en: "Predictive model to analyze well correlations using gamma ray data. Implemented DTW algorithm to assess and compare patterns across multiple wells for geological insight.",
+              id: "Model prediktif untuk menganalisis korelasi sumur menggunakan data gamma ray. Mengimplementasikan algoritma DTW untuk menilai dan membandingkan pola antar sumur demi pemahaman geologi.",
+            },
+            image: "assets/images/projects/3_well correlation.png",
+            tags: ["Python"],
+            github: "",
+            demo: "",
+          },
+          {
+            title: {
+              en: "Optimal Pipeline Routing with Dijkstra's Algorithm",
+              id: "Rute Pipa Optimal dengan Algoritma Dijkstra",
+            },
+            desc: {
+              en: "Calculated optimal routing between points considering pipeline distance and pressure drop constraints, producing cost-efficient and technically viable solutions.",
+              id: "Menghitung rute optimal antar titik dengan mempertimbangkan jarak pipa dan batasan pressure drop, menghasilkan solusi yang efisien secara biaya dan layak secara teknis.",
+            },
+            image: "assets/images/projects/4_distance optimization.png",
+            tags: ["Python"],
+            github: "",
+            demo: "",
+          },
+          {
+            title: {
+              en: "Well Log Data Processing",
+              id: "Pemrosesan Data Well Log",
+            },
+            desc: {
+              en: "Automated well log data processing with Python to enhance computational flexibility and enable dynamic, user-defined calculations for well log analysis.",
+              id: "Mengotomasi pemrosesan data well log dengan Python untuk meningkatkan fleksibilitas komputasi dan memungkinkan kalkulasi dinamis yang dapat dikustomisasi pengguna.",
+            },
+            image: "assets/images/projects/5_well log analysis.png",
+            tags: ["Python"],
+            github: "",
+            demo: "",
+          },
+          {
+            title: {
+              en: "Rock Type Prediction from Well Log Data",
+              id: "Prediksi Tipe Batuan dari Data Well Log",
+            },
+            desc: {
+              en: "ML model to predict rock types across all depths of a well without labelled data, trained using data from other wells in the same field.",
+              id: "Model ML untuk memprediksi tipe batuan di seluruh kedalaman sumur tanpa data berlabel, dilatih menggunakan data dari sumur lain di lapangan yang sama.",
+            },
+            image: "assets/images/projects/6_rock type prediction.png",
+            tags: ["Python"],
+            github: "",
+            demo: "",
+          },
+          {
+            title: {
+              en: "Business Intelligence Dashboard",
+              id: "Dashboard Business Intelligence",
+            },
+            desc: {
+              en: "Dynamic BI solution for AdventureWorks Cycles. Raw data transformed into insights via Power Query, relational data modelling, and DAX. Reports track KPIs, product trends, and high-value customers.",
+              id: "Solusi BI dinamis untuk AdventureWorks Cycles. Data mentah ditransformasi menjadi insight melalui Power Query, pemodelan data relasional, dan DAX. Laporan melacak KPI, tren produk, dan pelanggan bernilai tinggi.",
+            },
+            image: "assets/images/projects/7_business intelligence.png",
+            tags: ["Power BI"],
+            github: "",
+            demo: "",
+          },
+        ],
+
+        /* ── Blog ────────────────────────────────────────── */
+        blog: {
+          mediumUsername: "izzamtursina",
+          whitelist: [
+            /* Each entry is an object with a url and optional en override.
+             en.title / en.excerpt are shown when the site is in English.
+             If omitted, the original RSS content (Indonesian) is used.
+             Order here = display order. */
+            {
+              url: "https://izzamtursina.medium.com/anabel-3-bukan-pertanyaan-1b468106803a",
+              en: {
+                title: "Not a Question",
+                excerpt:
+                  "We are not genuinely inquiring; we are merely waiting for others to concede their mistakes.",
+              },
+            },
+            {
+              url: "https://izzamtursina.medium.com/anabel-2-potongan-video-profesor-dan-kita-yang-malas-berpikir-fceb4ff73f27",
+              en: {
+                title:
+                  "Video Clips, a Professor, and Our Intellectual Laziness",
+                excerpt:
+                  "The debate between Bennix and Rhenald Kasali extends beyond the value of the Rupiah. It highlights our methods of information consumption and our susceptibility to manipulation.",
+              },
+            },
+            {
+              url: "https://izzamtursina.medium.com/anabel-1-ketika-moodys-menghakimi-indonesia-hukuman-yang-adil-atau-kepentingan-yang-menyamar-92e0717ca69a",
+              en: {
+                title:
+                  "When Moody's Judges Indonesia: A Fair Verdict or Vested Interests Disguised as Objectivity?",
+                excerpt:
+                  "A personal inquiry into who holds the authority to define what constitutes a 'good' policy.",
+              },
+            },
+          ],
+          fallbackImage: "assets/images/blog-placeholder.png",
+        },
+      };
+
+      /* ============================================================
+       RENDER — do not edit below this line
+    ============================================================ */
+      document.addEventListener("DOMContentLoaded", () => {
+        /* ── Helpers ─── */
+        let currentLang = localStorage.getItem("lang") || "en";
+
+        function t(key) {
+          const entry = SITE.i18n[key];
+          if (!entry) return key;
+          return entry[currentLang] || entry.en || key;
+        }
+
+        function tVal(val) {
+          if (!val) return "";
+          if (typeof val === "string") return val;
+          return val[currentLang] || val.en || "";
+        }
+
+        /* ── Theme ─── */
+        const html = document.documentElement;
+        const themeBtn = document.getElementById("theme-toggle");
+        const themeIcon = document.getElementById("theme-icon");
+        const navLogoImg = document.querySelector(".nav-logo img");
+
+        function applyTheme(theme) {
+          html.setAttribute("data-theme", theme);
+          themeIcon.className = theme === "dark" ? "bx bx-moon" : "bx bx-sun";
+          navLogoImg.src =
+            theme === "dark"
+              ? "assets/images/icon/logo-it-white.svg"
+              : "assets/images/icon/logo-it-darkblue.svg";
+          localStorage.setItem("theme", theme);
+        }
+
+        applyTheme(localStorage.getItem("theme") || "dark");
+
+        themeBtn.addEventListener("click", () => {
+          applyTheme(
+            html.getAttribute("data-theme") === "dark" ? "light" : "dark",
+          );
+        });
+
+        /* ── Language ─── */
+        function applyLang(lang) {
+          currentLang = lang;
+          localStorage.setItem("lang", lang);
+          html.lang = lang;
+          document.getElementById("lang-toggle").textContent =
+            lang === "en" ? "ID" : "EN";
+          renderAll();
+        }
+
+        document.getElementById("lang-toggle").addEventListener("click", () => {
+          applyLang(currentLang === "en" ? "id" : "en");
+        });
+
+        /* ── Static i18n (data-i18n attributes) ─── */
+        function applyStaticI18n() {
+          document.querySelectorAll("[data-i18n]").forEach((el) => {
+            el.innerHTML = t(el.getAttribute("data-i18n"));
+          });
+        }
+
+        /* ── Hero ─── */
+        function renderHero() {
+          document.querySelector(".hero-greeting").textContent = t("greeting");
+          document.getElementById("hero-name").textContent = SITE.name;
+          document.getElementById("hero-role").innerHTML =
+            `${t("role")} <span class="at-company">${t("at_company")}</span>`;
+          document.getElementById("hero-subtitle").textContent = t("subtitle");
+          document.getElementById("hero-bio").textContent = t("bio");
+          document.getElementById("hero-work-btn").textContent = t("cta_work");
+          document.getElementById("hero-cv-btn").href = SITE.cvUrl;
+          document.getElementById("contact-body").innerHTML = t("contact_note");
+          document.getElementById("contact-email-btn").href =
+            `mailto:${SITE.email}`;
+          document.getElementById("cv-btn").href = SITE.cvUrl;
+        }
+
+        /* ── Nav ─── */
+        function renderNav() {
+          const navEl = document.getElementById("nav-links");
+          navEl.innerHTML = "";
+          const items = [
+            { key: "nav_about", href: "#hero" },
+            { key: "nav_exp", href: "#experiences" },
+            { key: "nav_proj", href: "#project" },
+            { key: "nav_blog", href: "#blog" },
+            { key: "nav_contact", href: "#contact" },
+          ];
+          items.forEach(({ key, href }) => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = href;
+            a.textContent = t(key);
+            li.appendChild(a);
+            navEl.appendChild(li);
+          });
+          // CV button
+          const liCv = document.createElement("li");
+          const aCv = document.createElement("a");
+          aCv.href = SITE.cvUrl;
+          aCv.textContent = t("nav_cv");
+          aCv.classList.add("btn-nav-cv");
+          aCv.setAttribute("download", "");
+          liCv.appendChild(aCv);
+          navEl.appendChild(liCv);
+
+          // Hamburger close on nav link click
+          navEl.querySelectorAll("a").forEach((a) => {
+            a.addEventListener("click", closeMenu);
+          });
+
+          // Re-run scroll spy against fresh nav links
+          updateScrollSpy();
+        }
+
+        /* ── Experience ─── */
+        function renderExp() {
+          const expEl = document.getElementById("exp-list");
+          expEl.innerHTML = "";
+          SITE.experience.forEach((job, i) => {
+            const el = document.createElement("div");
+            el.className = "exp-card fade-in visible";
+            el.style.transitionDelay = `${i * 0.06}s`;
+            const bulletsArr = Array.isArray(job.bullets)
+              ? job.bullets
+              : job.bullets[currentLang] || job.bullets.en || [];
+            const bullets = bulletsArr.length
+              ? `<ul>${bulletsArr.map((b) => `<li>${b}</li>`).join("")}</ul>`
+              : "";
+            const tags = job.tags
+              .map((tg) => `<span class="tag">${tg}</span>`)
+              .join("");
+            el.innerHTML = `
+            <div class="exp-date">${job.date}</div>
+            <div class="exp-body">
+              <h4>${job.role} · <span style="font-weight:400;color:var(--text-muted)">${job.company}</span></h4>
+              ${bullets}
+              <div class="tags">${tags}</div>
+            </div>`;
+            expEl.appendChild(el);
+          });
+        }
+
+        /* ── Projects ─── */
+        function renderProjects() {
+          const projEl = document.getElementById("projects-grid");
+          projEl.innerHTML = "";
+          SITE.projects.forEach((p, i) => {
+            const el = document.createElement("div");
+            el.className = "project-card fade-in visible";
+            el.style.transitionDelay = `${i * 0.05}s`;
+            const links = [
+              p.github
+                ? `<a href="${p.github}" class="project-link" target="_blank" rel="noopener" aria-label="GitHub"><i class="bx bxl-github"></i></a>`
+                : "",
+              p.demo
+                ? `<a href="${p.demo}"   class="project-link" target="_blank" rel="noopener" aria-label="Live demo"><i class="bx bx-link-external"></i></a>`
+                : "",
+            ].join("");
+            const tags = p.tags
+              .map((tg) => `<span class="tag">${tg}</span>`)
+              .join("");
+            el.innerHTML = `
+            <div class="project-img">
+              <img src="${p.image}" alt="${tVal(p.title)}" loading="lazy" />
+            </div>
+            <div class="project-info">
+              <p class="project-label">${t("proj_label")}</p>
+              <h3 class="project-title">${tVal(p.title)}</h3>
+              <p class="project-desc">${tVal(p.desc)}</p>
+              <div class="tags">${tags}</div>
+              ${links ? `<div class="project-links">${links}</div>` : ""}
+            </div>`;
+            projEl.appendChild(el);
+          });
+        }
+
+        /* ── renderAll ─── */
+        function rebuildBlogCards() {
+          const cached = blogEl._cachedPosts;
+          if (!cached) return; // Not yet loaded
+          blogEl.innerHTML = "";
+          cached.forEach((post, i) => blogEl.appendChild(buildCard(post, i)));
+          blogEl
+            .querySelectorAll(".fade-in")
+            .forEach((el) => fadeObs.observe(el));
+        }
+
+        function renderAll() {
+          applyStaticI18n();
+          renderHero();
+          renderNav();
+          renderExp();
+          renderProjects();
+          rebuildBlogCards();
+        }
+
+        /* ── Scroll spy ─── */
+        const sections = Array.from(document.querySelectorAll("section[id]"));
+
+        function updateScrollSpy() {
+          const navLinks = document.querySelectorAll(
+            "#nav-links a:not(.btn-nav-cv)",
+          );
+          const scrollY = window.scrollY + 80;
+          const atBottom =
+            window.scrollY + window.innerHeight >=
+            document.body.scrollHeight - 10;
+
+          let current = sections[0];
+          if (atBottom) {
+            // At the bottom of the page — always highlight the last section (contact)
+            current = sections[sections.length - 1];
+          } else {
+            for (const section of sections) {
+              if (section.offsetTop <= scrollY) current = section;
+            }
+          }
+
+          navLinks.forEach((a) => {
+            a.classList.toggle(
+              "active",
+              current && a.getAttribute("href") === `#${current.id}`,
+            );
+          });
+        }
+
+        window.addEventListener("scroll", updateScrollSpy, { passive: true });
+
+        /* ── Header scroll ─── */
+        const header = document.getElementById("header");
+        window.addEventListener(
+          "scroll",
+          () => {
+            header.classList.toggle("scrolled", window.scrollY > 10);
+          },
+          { passive: true },
+        );
+
+        /* ── Hamburger ─── */
+        const ham = document.getElementById("hamburger");
+        const nav = document.getElementById("nav-links");
+
+        function closeMenu() {
+          ham.classList.remove("open");
+          nav.classList.remove("open");
+          document.body.style.overflow = "";
+        }
+
+        ham.addEventListener("click", () => {
+          ham.classList.toggle("open");
+          nav.classList.toggle("open");
+          document.body.style.overflow = nav.classList.contains("open")
+            ? "hidden"
+            : "";
+        });
+
+        /* ── Fade-in observer ─── */
+        const fadeObs = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add("visible");
+                fadeObs.unobserve(e.target);
+              }
+            });
+          },
+          { threshold: 0.1 },
+        );
+
+        /* ── Blog (Medium RSS) ─── */
+        const blogEl = document.getElementById("blog-grid");
+        const blogCfg = SITE.blog;
+
+        document.getElementById("sidebar-medium").href =
+          `https://medium.com/@${blogCfg.mediumUsername}`;
+
+        function showSkeletons(n = 3) {
+          blogEl.innerHTML = Array(n)
+            .fill(`<div class="blog-skeleton"></div>`)
+            .join("");
+        }
+
+        function buildCard(post, i) {
+          const el = document.createElement("a");
+          el.className = "blog-card fade-in";
+          el.href = post.url;
+          el.target = "_blank";
+          el.rel = "noopener noreferrer";
+          el.style.transitionDelay = `${i * 0.07}s`;
+
+          // Use English override if available and site is in English
+          const displayTitle =
+            currentLang === "en" && post._en?.title
+              ? post._en.title
+              : post.title;
+          const displayExcerpt =
+            currentLang === "en" && post._en?.excerpt
+              ? post._en.excerpt
+              : post.excerpt;
+
+          const thumb = post.thumbnail
+            ? `<div class="blog-thumb-wrap"><img class="blog-thumb" src="${post.thumbnail}" alt="${displayTitle}" loading="lazy" /></div>`
+            : blogCfg.fallbackImage
+              ? `<div class="blog-thumb-wrap"><img class="blog-thumb" src="${blogCfg.fallbackImage}" alt="" loading="lazy" /></div>`
+              : "";
+
+          const tags = (post.categories || [])
+            .slice(0, 2)
+            .map((tg) => `<span class="blog-tag">${tg}</span>`)
+            .join("");
+
+          el.innerHTML = `
+          ${thumb}
+          <div class="blog-body">
+            <div class="blog-meta"><span>${post.date}</span>${tags}</div>
+            <h3 class="blog-title">${displayTitle}</h3>
+            <p class="blog-excerpt">${displayExcerpt}</p>
+            <span class="blog-read-more">${t("blog_read")} <i class="bx bx-right-arrow-alt"></i></span>
+          </div>`;
+          return el;
+        }
+
+        function extractCover(item) {
+          const thumb = item.thumbnail;
+          if (thumb && !thumb.includes("resize:fill")) return thumb;
+          const match =
+            item.content && item.content.match(/<img[^>]+src=["']([^"']+)["']/);
+          return match ? match[1] : null;
+        }
+
+        async function loadMediumPosts() {
+          const { mediumUsername, whitelist } = blogCfg;
+          if (!mediumUsername) {
+            blogEl.innerHTML = `<div class="blog-empty"><i class="bx bx-pencil"></i>${t("blog_empty")}</div>`;
+            return;
+          }
+          showSkeletons(whitelist.length || 3);
+          try {
+            const res = await fetch(
+              `https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@${mediumUsername}`,
+            );
+            if (!res.ok) throw new Error("fetch failed");
+            const data = await res.json();
+            if (data.status !== "ok" || !data.items?.length)
+              throw new Error("no items");
+
+            let posts = data.items.map((item) => ({
+              title: item.title,
+              url: item.link,
+              date: new Date(item.pubDate).toLocaleDateString("en-GB", {
+                month: "short",
+                year: "numeric",
+              }),
+              thumbnail: extractCover(item),
+              excerpt: item.description
+                ? item.description
+                    .replace(/<[^>]+>/g, "")
+                    .slice(0, 160)
+                    .trim() + "…"
+                : "",
+              categories: item.categories || [],
+            }));
+
+            if (whitelist.length) {
+              const ordered = [];
+              whitelist.forEach((entry) => {
+                // Support both plain URL strings and { url, en } objects
+                const wUrl = typeof entry === "string" ? entry : entry.url;
+                const enOverride = typeof entry === "object" ? entry.en : null;
+                const match = posts.find(
+                  (p) => p.url === wUrl || p.url.includes(wUrl),
+                );
+                if (match) {
+                  // Attach the English override to the matched post
+                  if (enOverride) match._en = enOverride;
+                  ordered.push(match);
+                }
+              });
+              posts = ordered;
+            }
+
+            blogEl.innerHTML = "";
+            if (!posts.length) {
+              blogEl.innerHTML = `<div class="blog-empty"><i class="bx bx-pencil"></i>${t("blog_whitelist_empty")}</div>`;
+              return;
+            }
+            // Cache posts so lang switch can re-render without re-fetching
+            blogEl._cachedPosts = posts;
+            posts.forEach((post, i) => blogEl.appendChild(buildCard(post, i)));
+            blogEl
+              .querySelectorAll(".fade-in")
+              .forEach((el) => fadeObs.observe(el));
+          } catch (err) {
+            console.warn("Medium RSS:", err);
+            blogEl.innerHTML = `
+            <div class="blog-error">
+              <i class="bx bx-wifi-off" style="font-size:2rem;display:block;margin-bottom:10px;"></i>
+              ${t("blog_error")}
+              <a href="https://medium.com/@${mediumUsername}" target="_blank" rel="noopener"
+                 style="color:var(--accent);margin-left:4px;">${t("blog_medium_link")}</a>
+            </div>`;
+          }
+        }
+
+        /* ── Init ─── */
+        applyLang(currentLang); // renders everything + nav
+        loadMediumPosts();
+
+        // Fade-in for static elements (sidebar, etc.)
+        document
+          .querySelectorAll(".fade-in")
+          .forEach((el) => fadeObs.observe(el));
+
+        // Smooth scroll
+        document.addEventListener("click", (e) => {
+          const a = e.target.closest('a[href^="#"]');
+          if (!a) return;
+          const target = document.querySelector(a.getAttribute("href"));
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+
+        // Scroll to top on reload
+        if ("scrollRestoration" in history)
+          history.scrollRestoration = "manual";
+        window.scrollTo(0, 0);
+
+        // Initial scroll spy pass
+        updateScrollSpy();
+      });
+    </script>
   </body>
 </html>
